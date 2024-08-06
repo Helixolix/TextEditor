@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class Editor extends Application {
+    //variables
     public static Pane root;
     public static TextArea textArea;
     public static AnchorPane anchorPane;
@@ -64,6 +65,28 @@ public class Editor extends Application {
             }
         });
 
+        //Save file
+        saveFileItem.setOnAction(actionEvent -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save file");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Editor", "*.txt"));
+            fileChooser.getInitialDirectory();
+            File file = fileChooser.showSaveDialog(stage);
+
+
+            try {
+                file.createNewFile();
+                file.mkdirs();
+
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(textArea.getText());
+                fileWriter.close();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         setFontItem.setOnAction(actionEvent -> {
             textArea.setFont(Font.font("Book Antiqua"));
             text.setFont(Font.font("Book Antiqua"));
@@ -89,27 +112,6 @@ public class Editor extends Application {
             openFileItem.setStyle("-fx-background-color: white;");
         });
 
-        saveFileItem.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save file");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Editor", "*.txt"));
-            fileChooser.getInitialDirectory();
-            File file = fileChooser.showSaveDialog(stage);
-
-
-            try {
-                file.createNewFile();
-                file.mkdirs();
-
-                FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(textArea.getText());
-                fileWriter.close();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
         textArea.setOnKeyTyped(actionEvent -> {
             text.setText(textArea.getText());
         });
@@ -119,6 +121,7 @@ public class Editor extends Application {
 
         textArea.setPrefSize(700, 600);
         textArea.setLayoutY(27);
+
         //init
         anchorPane.getChildren().add(menuBar);
         root.getChildren().addAll(textArea, text, countSymbol, anchorPane);
