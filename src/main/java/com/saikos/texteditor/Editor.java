@@ -64,13 +64,30 @@ public class Editor extends Application {
         fileMenu.getItems().addAll(saveFileItem, openFileItem);
 
         Menu editMenu = new Menu("Edit");
-        MenuItem setTheme = new MenuItem("Set theme");
+        MenuItem setThemeBlack = new MenuItem("Set theme Black");
+        MenuItem setThemeWhite = new MenuItem("Set theme White");
 
-        setTheme.setOnAction(actionEvent -> {
+        editMenu.getItems().addAll(setThemeWhite, setThemeBlack);
 
+        setThemeBlack.setOnAction(actionEvent -> {
+            root.setStyle("-fx-background-color: grey;");
+            setThemeBlack.setStyle("-fx-background-color: darkgrey;");
+            setThemeWhite.setStyle("-fx-background-color: darkgrey;");
+            editMenu.setStyle("-fx-background-color: darkgrey;");
+            fileMenu.setStyle("-fx-background-color: darkgrey;");
+            saveFileItem.setStyle("-fx-background-color: darkgrey;");
+            openFileItem.setStyle("-fx-background-color: darkgrey;");
         });
 
-        editMenu.getItems().add(setTheme);
+        setThemeWhite.setOnAction(actionEvent -> {
+            root.setStyle("-fx-background-color: white;");
+            setThemeBlack.setStyle("-fx-background-color: white;");
+            setThemeWhite.setStyle("-fx-background-color: white;");
+            editMenu.setStyle("-fx-background-color: white;");
+            fileMenu.setStyle("-fx-background-color: white;");
+            saveFileItem.setStyle("-fx-background-color: white;");
+            openFileItem.setStyle("-fx-background-color: white;");
+        });
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(fileMenu, editMenu);
@@ -109,10 +126,7 @@ public class Editor extends Application {
         textArea.setLayoutY(27);
 
         anchorPane.getChildren().add(menuBar);
-        root.getChildren().add(textArea);
-        root.getChildren().add(text);
-        root.getChildren().add(countSymbol);
-        root.getChildren().add(anchorPane);
+        root.getChildren().addAll(textArea, text, countSymbol, anchorPane);
 
         stage.setResizable(false);
         stage.setTitle("Text Editor");
