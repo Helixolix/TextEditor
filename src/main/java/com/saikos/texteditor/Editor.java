@@ -1,27 +1,19 @@
 package com.saikos.texteditor;
 
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import javafx.scene.effect.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
-import java.util.Optional;
 
 public class Editor extends Application {
     public static Pane root;
@@ -31,7 +23,8 @@ public class Editor extends Application {
     public static Label countSymbol;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
+        //Object
         countSymbol = new Label();
 
         text = new Text();
@@ -40,10 +33,20 @@ public class Editor extends Application {
         root = new Pane();
         anchorPane = new AnchorPane();
 
+        Scene scene = new Scene(root, 830, 650);
+
+        Menu editMenu = new Menu("Edit");
+        MenuItem setThemeBlack = new MenuItem("Set theme Black");
+        MenuItem setThemeWhite = new MenuItem("Set theme White");
+        MenuItem setFontItem = new MenuItem("Set font Book Antiqua");
+
+        MenuBar menuBar = new MenuBar();
+
         Menu fileMenu = new Menu("File");
         MenuItem saveFileItem = new MenuItem("Save file");
         MenuItem openFileItem = new MenuItem("Open file");
 
+        //Open file
         openFileItem.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
@@ -61,13 +64,10 @@ public class Editor extends Application {
             }
         });
 
-        fileMenu.getItems().addAll(saveFileItem, openFileItem);
-
-        Menu editMenu = new Menu("Edit");
-        MenuItem setThemeBlack = new MenuItem("Set theme Black");
-        MenuItem setThemeWhite = new MenuItem("Set theme White");
-
-        editMenu.getItems().addAll(setThemeWhite, setThemeBlack);
+        setFontItem.setOnAction(actionEvent -> {
+            textArea.setFont(Font.font("Book Antiqua"));
+            text.setFont(Font.font("Book Antiqua"));
+        });
 
         setThemeBlack.setOnAction(actionEvent -> {
             root.setStyle("-fx-background-color: grey;");
@@ -88,9 +88,6 @@ public class Editor extends Application {
             saveFileItem.setStyle("-fx-background-color: white;");
             openFileItem.setStyle("-fx-background-color: white;");
         });
-
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(fileMenu, editMenu);
 
         saveFileItem.setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
@@ -117,16 +114,17 @@ public class Editor extends Application {
             text.setText(textArea.getText());
         });
 
-
-        Scene scene = new Scene(root, 830, 650);
         text.setX(710);
         text.setY(40);
 
         textArea.setPrefSize(700, 600);
         textArea.setLayoutY(27);
-
+        //init
         anchorPane.getChildren().add(menuBar);
         root.getChildren().addAll(textArea, text, countSymbol, anchorPane);
+        fileMenu.getItems().addAll(saveFileItem, openFileItem);
+        editMenu.getItems().addAll(setThemeWhite, setThemeBlack, setFontItem);
+        menuBar.getMenus().addAll(fileMenu, editMenu);
 
         stage.setResizable(false);
         stage.setTitle("Text Editor");
