@@ -4,4 +4,4 @@
 
 # Download
 
-### Windows [Text editor.exe](Text%20editor.exe)
+### Windows - [Download](https://github.com/Helixolix/TextEditor/releases/tag/Editor_0.01)
