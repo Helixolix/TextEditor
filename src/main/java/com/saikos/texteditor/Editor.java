@@ -7,6 +7,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -129,6 +130,7 @@ public class Editor extends Application {
         editMenu.getItems().addAll(setThemeWhite, setThemeBlack, setFontItem);
         menuBar.getMenus().addAll(fileMenu, editMenu);
 
+        stage.getIcons().add(new Image(String.valueOf(this.getClass().getResource("TexteditorIcon.png"))));
         stage.setResizable(false);
         stage.setTitle("Text Editor");
         stage.setScene(scene);
